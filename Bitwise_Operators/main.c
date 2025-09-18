@@ -3,7 +3,6 @@
 #include <math.h>
 #include <stdlib.h>
 
-//Complete the following function.
 //Biggest function
 int biggest(int a, int b)
 {
@@ -44,12 +43,13 @@ int binary_to_decimal(int binary)
     }
     return nb;
 }
-// Bitwsie OR (Binary)
-int bitwise_or(int a, int b)
+// Bitwsie OR
+int bitwise_or(int n, int k)
 {
 	int total = 0;
-    int big, multiplier;
-
+    int big, multiplier, a, b;
+	a = decimal_to_binary(n);
+	b = decimal_to_binary(k);
     multiplier = 1;
     big = biggest(a, b);
     while (big != 0)
@@ -70,31 +70,124 @@ int bitwise_or(int a, int b)
             big /= 10;
         }
     }
-	return (total);
+	return (binary_to_decimal(total));
 }
 // Bitwise AND
-int bitwise_and(int a, int b)
+int bitwise_and(int n, int k)
 {
-    
+	int total = 0;
+    int big, multiplier, a, b;
+
+	a = decimal_to_binary(n);
+	b = decimal_to_binary(k);
+    multiplier = 1;
+    big = biggest(a, b);
+    while (big != 0)
+    {
+		if ((a%10 == 1) && (b%10 == 1))
+        {
+			total = total + multiplier * 1;
+            multiplier *= 10;
+			a = (a-(a%10))/10;
+			b = (b-(b%10))/10;
+            big /= 10;
+        }
+		else
+        {
+            multiplier *= 10;
+			a /= 10;
+			b /= 10;
+            big /= 10;
+        }
+    }
+	return (binary_to_decimal(total));
 }
+// Bitwise XOR
+int bitwise_xor(int n, int k)
+{
+	int total = 0;
+    int big, multiplier, a, b;
 
+	a = decimal_to_binary(n);
+	b = decimal_to_binary(k);
+    multiplier = 1;
+    big = biggest(a, b);
+    while (big != 0)
+    {
+		if ((a%10 == 1) != (b%10 == 1))
+        {
+			total = total + multiplier * 1;
+            multiplier *= 10;
+			a = (a-(a%10))/10;
+			b = (b-(b%10))/10;
+            big /= 10;
+        }
+		else
+        {
+            multiplier *= 10;
+			a /= 10;
+			b /= 10;
+            big /= 10;
+        }
+    }
+	return (binary_to_decimal(total));
+}
+// Max Value in an array of numbers function
+int max_value(int *arr, int length)
+{
+    int max = arr[0];
+    for (int i = 1; i < length; i++)
+    {
+        if (arr[i] > max)
+            max = arr[i];
+    }
+    return max;
+}
+// Main Function
 void calculate_the_maximum(int n, int k) {
-  //Write your code here.
+	int i = 1;
+	int j, tmp;
+	int bitor[1000], bitand[1000], bitxor[1000], ori = 0, xori = 0, andi = 0, orlength = 0, andlength = 0, xorlength = 0;
 
+	while ( i <= n)
+	{
+		j = i + 1;
+		while (j <= n)
+		{
+			int bitwiseor = bitwise_or(i, j);
+			int bitwisexor = bitwise_xor(i, j);
+			int bitwiseand = bitwise_and(i, j); 
+			if (bitwiseor < k)
+			{
+				bitor[ori] = bitwiseor;
+				orlength++;
+				ori++;
+			}
+			if (bitwiseand < k)
+			{
+				bitand[andi] = bitwiseand;
+				andlength++;
+				andi++;
+			}
+			if (bitwisexor < k)
+			{
+				bitxor[xori] = bitwisexor;
+				xorlength++;
+				xori++;
+			}
+			j++;
+		}
+		i++;
+	}
+	printf("%d\n", max_value(bitand, andlength));
+	printf("%d\n", max_value(bitor, orlength));
+	printf("%d", max_value(bitxor, xorlength));
 }
 
 int main() {
     int n, k;
-    int binaryn, binaryk;
 
     scanf("%d %d", &n, &k);
-    //printf("Result of %d osss %d: %d\n", n, k, ft_power(n, k));
     calculate_the_maximum(n, k);
-    binaryn = decimal_to_binary(n);
-    binaryk = decimal_to_binary(k);
-    printf("binary n: %d\n", binaryn);
-    printf("binary k: %d\n", binaryk);
-    printf("bitwise OR: %d\n", bitwise_or(binaryn, binaryk));
-    printf("bitwise OR decima: %d\n", binary_to_decimal(bitwise_or(binaryn, binaryk)));
     return 0;
 }
