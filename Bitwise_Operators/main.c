@@ -3,6 +3,8 @@
 #include <math.h>
 #include <stdlib.h>
 
+/* this one is a manual solution by me it works but it doesn't pass every test case if you want the correct one go to Correct_Bitwise_Operator */
+
 //Biggest function
 int biggest(int a, int b)
 {
