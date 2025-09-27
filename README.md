@@ -1,4 +1,4 @@
-# HackerRank C Problems Solutions 🚀
+# HackerRank C Programming Problems Solutions 🚀
 
 Welcome!  
 This repository contains my personal solutions to **HackerRank C programming problems**.
